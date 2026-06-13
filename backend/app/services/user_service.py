@@ -4,6 +4,7 @@ from app.models.user import User
 from app.schemas.user import UserRegisterSchema
 from app.auth.security import hash_password
 
+from app.auth.security import verify_password
 
 def check_email_exists(
     db: Session,
@@ -80,3 +81,27 @@ def register_user(
     except Exception:
         db.rollback()
         raise
+    
+def get_user_by_email(
+    db: Session,
+    email: str
+):
+    return db.query(User).filter(
+        User.email == email
+    ).first()
+    
+def authenticate_user(db:Session,email:str,password:str):
+    user = get_user_by_email(
+    db,
+    email
+)
+    if not user:
+        raise ValueError(
+        "Invalid email or password"
+    )
+    if not verify_password(
+        password,
+        user.password_hash
+    ):
+        raise ValueError("Invalid email or password")
+    return user

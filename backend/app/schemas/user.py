@@ -7,3 +7,8 @@ class UserRegisterSchema(BaseModel):
     phone_number:str = Field(...,min_length=10,max_length=10)
     password:str = Field(...,min_length=8)
     
+class UserLoginSchema(BaseModel):
+    email:EmailStr
+    password:str
+    
+    
