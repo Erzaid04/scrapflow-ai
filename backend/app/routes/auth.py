@@ -5,6 +5,7 @@ from app.schemas.user import UserRegisterSchema
 from app.services.user_service import register_user
 from app.schemas.user import UserLoginSchema
 from app.services.user_service import authenticate_user
+from app.auth.jwt_handler import create_access_token
 
 
 app = FastAPI()
@@ -46,16 +47,13 @@ def login(
         password=login_data.password
         
     )
+    token = create_access_token(
+        user_id=user.id,
+        role=user.role
+    )
     return {
-        "success":True,
-        "message":"Login successfull",
-        "user":{
-            "id":user.id,
-            "name":user.name,
-            "email":user.email,
-            "role":user.role
-
-        }
+        "access_token":token,
+        "token_type":"bearer"
     }
     
     
