@@ -1,66 +1,160 @@
 # ScrapFlow AI - Progress Log
 
+## Project Overview
+
+ScrapFlow AI is a SaaS platform for scrap business management, designed with a layered FastAPI architecture and role-based authentication.
+
+---
+
 ## Completed Features
 
-### Database Setup
+### Database Layer
 
-* MySQL configured
-* SQLAlchemy configured
-* SessionLocal configured
-* Database connection tested
+* MySQL database configured
+* SQLAlchemy ORM configured
+* SessionLocal database session management
+* Database connection verified
 
-### User Module
+### User Management
 
 * User model created
 * Users table created
-* User roles:
+* User roles implemented:
 
   * owner
   * worker
   * accountant
 
-### Security
+### Security Layer
 
 * bcrypt password hashing
 * Password verification
+* Passwords stored as hashes only
 
-### Registration API
+### Registration Module
 
 * User registration schema
-* Email uniqueness check
-* Phone uniqueness check
-* Password hashing
-* User creation
-* Swagger testing completed
+* Email uniqueness validation
+* Phone number uniqueness validation
+* Password hashing before storage
+* User creation workflow
+* Registration API tested successfully
 
-### Login API
+### Login Module
 
 * Login schema
 * User lookup by email
-* Password verification
+* Password verification workflow
 * Authentication service
-* Swagger testing completed
+* Login API tested successfully
+
+### JWT Authentication
+
+* JWT configuration using environment variables
+* SECRET_KEY setup
+* ALGORITHM setup (HS256)
+* ACCESS_TOKEN_EXPIRE_MINUTES setup
+* JWT utility module created
+* create_access_token() implemented
+* verify_access_token() implemented
+* JWT payload design:
+
+  * sub (user_id)
+  * role
+  * exp (expiration time)
+* Login endpoint updated to return JWT access token
+* Bearer token authentication implemented
+
+---
 
 ## Current Architecture
 
 Frontend
 ↓
-Route
+Routes
 ↓
-Schema
+Schemas
 ↓
-Service
+Services
 ↓
-Security
+Security / JWT
 ↓
-Model
+Models
 ↓
 Database
 
-## Next Steps
+---
 
-1. JWT Token Generation
+## APIs Completed
+
+### Authentication APIs
+
+POST /api/v1/auth/register
+
+* Register new user
+
+POST /api/v1/auth/login
+
+* Authenticate user
+* Generate JWT token
+* Return bearer access token
+
+---
+
+## Current Status
+
+Authentication System: ✅ Completed
+
+Features Completed:
+
+* Registration
+* Login
+* Password Hashing
+* JWT Generation
+* Token Verification
+
+---
+
+## Next Milestone
+
+### Authorization System
+
+Planned Features:
+
+1. get_current_user()
 2. Protected Routes
-3. Get Current User
+3. GET /me Endpoint
 4. Role-Based Authorization
-5. Inventory Module
+5. Owner Access Control
+6. Worker Access Control
+7. Accountant Access Control
+
+---
+
+## Technical Concepts Learned
+
+* SQLAlchemy ORM
+* Models
+* Schemas
+* Routes
+* Service Layer
+* Password Hashing
+* Password Verification
+* JWT Authentication
+* Bearer Tokens
+* Environment Variables
+* Layered Backend Architecture
+
+---
+
+## Latest Achievement
+
+Successfully implemented a complete JWT-based authentication system with:
+
+* User Registration
+* User Login
+* Password Security
+* Access Token Generation
+* Token Verification
+
+Project is now ready for protected routes and authorization.
