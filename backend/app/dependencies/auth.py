@@ -1,6 +1,6 @@
 from fastapi import Depends,HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.orm import session
+from sqlalchemy.orm import Session
 
 from app.auth.jwt_handler import verify_access_token
 from app.database.connection import SessionLocal
@@ -22,7 +22,7 @@ def get_db():
         
 def get_current_user(
     token: str = Depends(oauth2_schema),
-    db:session = Depends(get_db)
+    db:Session = Depends(get_db)
 ):
     try:
         payload = verify_access_token(token)
