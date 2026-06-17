@@ -8,7 +8,7 @@ from app.models.user import User
 
 #Oauth2 dependency
 oauth2_schema = OAuth2PasswordBearer(
-    tokenUrl="/api/v1/auth/login"
+    tokenUrl="/api/v1/auth/token"
 )
 
 #database dependency
