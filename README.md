@@ -12,25 +12,26 @@ Digitize scrap collection, inventory tracking, sales management, profitability t
 
 ### Completed
 
-* FastAPI backend setup
-* MySQL database integration
-* SQLAlchemy ORM setup
-* Database session management
-* User model implementation
-* Password hashing with bcrypt
-* User registration API
-* User login API
-* JWT authentication
-* Token verification
-* Swagger API documentation and testing
+• FastAPI backend setup
+• MySQL database integration
+• SQLAlchemy ORM setup
+• Database session management
+• User model implementation
+• Password hashing with bcrypt
+• User registration API
+• User login API
+• JWT authentication
+• OAuth2 integration
+• Protected routes
+• Current user API
+• Role-Based Access Control (RBAC)
+• Inventory Management MVP
+• Inventory Create API
+• Inventory List API
+• Swagger API testing
 
-### In Progress
 
-* Authorization system
-* Protected routes
-* Current user API
 
----
 
 ## Tech Stack
 
@@ -110,15 +111,19 @@ Features:
 * [x] User Registration
 * [x] User Login
 * [x] JWT Authentication
-* [ ] Protected Routes
-* [ ] Role-Based Access Control
+* [x] Protected Routes
+* [x] Role-Based Access Control
 
 ### Phase 2: Inventory Management
 
-* [ ] Inventory Tracking
-* [ ] Material Categories
-* [ ] Stock Management
-* [ ] Batch Tracking
+Phase 2: Inventory Management
+
+* [x] Inventory Tracking
+* [x] Inventory Create API
+* [x] Inventory List API
+* [ ] Inventory Update API
+* [ ] Inventory Delete API
+* [ ] Inventory By ID API
 
 ### Phase 3: Business Operations
 
@@ -159,4 +164,9 @@ backend/
 
 ## Latest Milestone
 
-Successfully implemented a complete JWT-based authentication system with secure password hashing and bearer token authentication.
+Successfully implemented a complete Authentication and Authorization system with JWT, OAuth2, Protected Routes, and Role-Based Access Control (RBAC).
+
+Built the first business module (Inventory Management MVP) including inventory creation, inventory listing, MySQL persistence, and role-based permissions.
+
+Current platform supports secure multi-role access for Owners, Workers, and Accountants.
+
