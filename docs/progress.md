@@ -2,239 +2,11 @@
 
 ## Project Overview
 
-ScrapFlow AI is a SaaS platform for scrap business management, designed with a layered FastAPI architecture and role-based authentication.
+ScrapFlow AI is a SaaS platform for scrap business management built using FastAPI, MySQL, SQLAlchemy, JWT Authentication, OAuth2, and Role-Based Access Control (RBAC).
 
 ---
 
-# Completed Features
-
-## Database Layer
-
-* MySQL database configured
-* SQLAlchemy ORM configured
-* SessionLocal database session management
-* Database connection verified
-
----
-
-## User Management
-
-* User model created
-* Users table created
-* User roles implemented:
-
-  * owner
-  * worker
-  * accountant
-
----
-
-## Security Layer
-
-* bcrypt password hashing implemented
-* Password verification implemented
-* Passwords stored as hashes only
-* JWT-based authentication implemented
-
----
-
-## Registration Module
-
-* User registration schema created
-* Email uniqueness validation
-* Phone number uniqueness validation
-* Password hashing before storage
-* User creation workflow completed
-* Registration API tested successfully
-
-### Endpoint
-
-POST /api/v1/auth/register
-
-Purpose:
-
-* Register new users
-
----
-
-## Login Module
-
-* Login schema created
-* User lookup by email
-* Password verification workflow
-* Authentication service implemented
-* Login API tested successfully
-
-### Endpoint
-
-POST /api/v1/auth/login
-
-Purpose:
-
-* Authenticate users
-* Generate JWT token
-* Return bearer access token
-
----
-
-## JWT Authentication
-
-### Environment Configuration
-
-* SECRET_KEY configured
-* ALGORITHM configured (HS256)
-* ACCESS_TOKEN_EXPIRE_MINUTES configured
-
-### JWT Utility Module
-
-Created:
-
-app/auth/jwt_handler.py
-
-Implemented:
-
-* create_access_token()
-* verify_access_token()
-
-### JWT Payload Structure
-
-```json
-{
-  "sub": "user_id",
-  "role": "owner",
-  "exp": "expiration_time"
-}
-```
-
-### Authentication Flow
-
-User Login
-↓
-Validate Credentials
-↓
-Generate JWT
-↓
-Return Access Token
-↓
-Client Stores Token
-↓
-Protected API Access
-
----
-
-## OAuth2 Integration
-
-### Implemented
-
-* OAuth2PasswordBearer
-* OAuth2PasswordRequestForm
-* OAuth2 token endpoint
-* Swagger OAuth2 integration
-* Swagger Authorize button working
-
-### Endpoint
-
-POST /api/v1/auth/token
-
-Purpose:
-
-* OAuth2-compatible authentication
-* Swagger authorization support
-
----
-
-## Protected Routes
-
-Created:
-
-app/dependencies/auth.py
-
-### Implemented
-
-* OAuth2PasswordBearer configuration
-* get_current_user() dependency
-* JWT token extraction
-* JWT validation
-* Current user retrieval
-* Database user verification
-
-### Authentication Flow
-
-JWT Token
-↓
-OAuth2PasswordBearer
-↓
-verify_access_token()
-↓
-Extract User ID
-↓
-Query Database
-↓
-Return Current User
-
----
-
-## User Routes
-
-Created:
-
-app/routes/users.py
-
-### Implemented
-
-GET /api/v1/users/me
-
-Purpose:
-
-* Return currently logged-in user
-
-Protected by:
-
-* JWT Authentication
-
----
-
-## Role-Based Access Control (RBAC)
-
-Created:
-
-app/dependencies/roles.py
-
-### Implemented
-
-* require_roles() dependency factory
-* Role validation logic
-* Permission checking
-* 403 Forbidden handling
-
-### Authorization Flow
-
-Request
-↓
-JWT Validation
-↓
-Current User
-↓
-Role Check
-↓
-Allow / Deny Access
-
-### Test Route
-
-GET /api/v1/users/owner-only
-
-Allowed Roles:
-
-* owner
-
-Blocked Roles:
-
-* worker
-* accountant
-
----
-
-# Current Architecture
+# Project Architecture
 
 Frontend
 ↓
@@ -254,33 +26,365 @@ Database
 
 ---
 
-# APIs Completed
+# Completed Features
 
-## Authentication
+## Database Layer
 
-POST /api/v1/auth/register
+### Completed
 
-* Register new user
-
-POST /api/v1/auth/login
-
-* Login with email/password
-
-POST /api/v1/auth/token
-
-* OAuth2 authentication endpoint
+* MySQL database configured
+* SQLAlchemy ORM configured
+* SessionLocal database session management
+* Database connection verified
+* Base model architecture created
+* Database table creation workflow implemented
 
 ---
 
-## User APIs
+## User Management
+
+### User Model
+
+Created:
+
+app/models/user.py
+
+Implemented:
+
+* User model
+* Users table
+* Role management
+
+Roles:
+
+* owner
+* worker
+* accountant
+
+---
+
+## Security Layer
+
+### Password Security
+
+Implemented:
+
+* bcrypt password hashing
+* Password verification
+* Secure password storage
+
+### JWT Authentication
+
+Environment Variables:
+
+* SECRET_KEY
+* ALGORITHM (HS256)
+* ACCESS_TOKEN_EXPIRE_MINUTES
+
+Created:
+
+app/auth/jwt_handler.py
+
+Implemented:
+
+* create_access_token()
+* verify_access_token()
+
+JWT Payload:
+
+```json
+{
+  "sub": "user_id",
+  "role": "user_role",
+  "exp": "expiration_time"
+}
+```
+
+---
+
+## Registration Module
+
+### Endpoint
+
+POST /api/v1/auth/register
+
+### Features
+
+* User registration schema
+* Email uniqueness validation
+* Phone number uniqueness validation
+* Password hashing before storage
+* User creation workflow
+* Registration API tested successfully
+
+---
+
+## Login Module
+
+### Endpoint
+
+POST /api/v1/auth/login
+
+### Features
+
+* Login schema
+* User lookup by email
+* Password verification workflow
+* Authentication service
+* JWT token generation
+* Login API tested successfully
+
+---
+
+## OAuth2 Integration
+
+### Endpoint
+
+POST /api/v1/auth/token
+
+### Implemented
+
+* OAuth2PasswordBearer
+* OAuth2PasswordRequestForm
+* Swagger OAuth2 integration
+* Swagger Authorize button working
+* Automatic JWT injection
+
+---
+
+## Protected Routes
+
+Created:
+
+app/dependencies/auth.py
+
+### Implemented
+
+* OAuth2PasswordBearer configuration
+* get_current_user() dependency
+* JWT extraction
+* JWT verification
+* User retrieval from database
+* Protected route support
+
+### Endpoint
 
 GET /api/v1/users/me
 
-* Get current authenticated user
+Purpose:
 
-GET /api/v1/users/owner-only
+* Return currently authenticated user
 
-* Owner-only protected endpoint
+---
+
+# Authorization System
+
+Status: ✅ Completed
+
+## RBAC
+
+Created:
+
+app/dependencies/roles.py
+
+Implemented:
+
+* require_roles() dependency factory
+* Role validation logic
+* Permission checking
+* 403 Forbidden handling
+
+### RBAC Testing
+
+Owner:
+
+* Login successful
+* Owner routes accessible
+* Worker routes blocked
+* Accountant routes blocked
+
+Worker:
+
+* Login successful
+* Worker routes accessible
+* Owner routes blocked
+
+Accountant:
+
+* Login successful
+* Accountant routes accessible
+* Inventory modification blocked
+
+Verification:
+
+* JWT integrated with RBAC
+* Multi-role authorization verified
+* 403 Forbidden responses verified
+
+---
+
+# Inventory Module
+
+Status: ✅ MVP Completed
+
+## Requirements Analysis
+
+Completed:
+
+* Inventory workflow designed
+* Inventory fields finalized
+* Inventory permissions designed
+* Inventory RBAC rules finalized
+
+---
+
+## Inventory Model
+
+Created:
+
+app/models/inventory.py
+
+Implemented:
+
+* id
+* material_name
+* quantity
+* unit
+* purchase_price_per_unit
+* supplier_name
+* created_by
+* created_at
+
+Additional Features:
+
+* Foreign Key relationship with users table
+* Automatic timestamp generation
+
+---
+
+## Database
+
+Completed:
+
+* Inventories table created
+* Foreign Key constraints configured
+* Table creation verified
+
+---
+
+## Schemas
+
+Created:
+
+app/schemas/inventory.py
+
+Implemented:
+
+* InventoryCreate
+* InventoryResponse
+
+---
+
+## Service Layer
+
+Created:
+
+app/services/inventory_service.py
+
+Implemented:
+
+* add_inventory()
+* get_all_inventory()
+
+---
+
+## Inventory APIs
+
+### Create Inventory
+
+POST /api/v1/inventory
+
+Purpose:
+
+* Add inventory entry
+
+Permissions:
+
+* owner ✅
+* worker ✅
+* accountant ❌
+
+---
+
+### List Inventory
+
+GET /api/v1/inventory
+
+Purpose:
+
+* View all inventory records
+
+Permissions:
+
+* owner ✅
+* worker ✅
+* accountant ✅
+
+---
+
+## Inventory Testing
+
+Completed:
+
+* Inventory creation tested
+* Inventory listing tested
+* Inventory stored in MySQL
+* Inventory retrieval verified
+* RBAC permissions verified
+
+---
+
+## Inventory Permissions Matrix
+
+### Owner
+
+* Create Inventory ✅
+* View Inventory ✅
+* Update Inventory ⏳
+* Delete Inventory ⏳
+
+### Worker
+
+* Create Inventory ✅
+* View Inventory ✅
+* Update Inventory ⏳
+* Delete Inventory ❌
+
+### Accountant
+
+* View Inventory ✅
+* Create Inventory ❌
+* Update Inventory ❌
+* Delete Inventory ❌
+
+---
+
+# APIs Completed
+
+## Authentication APIs
+
+* POST /api/v1/auth/register
+* POST /api/v1/auth/login
+* POST /api/v1/auth/token
+
+## User APIs
+
+* GET /api/v1/users/me
+
+## Inventory APIs
+
+* POST /api/v1/inventory
+* GET /api/v1/inventory
 
 ---
 
@@ -293,18 +397,15 @@ GET /api/v1/users/owner-only
 * Routes
 * Service Layer
 * Dependency Injection
-* Password Hashing
-* Password Verification
 * JWT Authentication
-* JWT Payload Design
-* Access Tokens
-* Bearer Tokens
-* OAuth2PasswordBearer
-* OAuth2PasswordRequestForm
+* OAuth2
 * Protected Routes
 * Current User Pattern
-* Role-Based Access Control (RBAC)
+* RBAC
+* Password Hashing
 * Environment Variables
+* Foreign Keys
+* CRUD Foundations
 * Layered Backend Architecture
 
 ---
@@ -315,62 +416,76 @@ GET /api/v1/users/owner-only
 
 Status: ✅ Completed
 
-Completed:
+## Authorization System
 
-* Registration
-* Login
-* Password Hashing
-* Password Verification
-* JWT Generation
-* JWT Verification
-* OAuth2 Integration
-* Swagger Authorization
+Status: ✅ Completed
+
+## RBAC System
+
+Status: ✅ Completed
+
+## Inventory Module MVP
+
+Status: ✅ Completed
 
 ---
 
-## Authorization System
+# Next Milestone
 
-Authorization System: ✅ Completed
+## Inventory CRUD Completion
 
-Completed:
+Planned Features:
 
-* Protected Routes
-* Current User Dependency
-* RBAC Foundation
-* Role Validation Dependency
+GET /api/v1/inventory/{id}
 
-## RBAC Testing Completed
+* View inventory by ID
 
-### Test Results
+PUT /api/v1/inventory/{id}
 
-#### Owner Role
+* Update inventory
 
-* Login successful
-* Access to owner-only routes verified
-* Access to inventory-access route verified
+DELETE /api/v1/inventory/{id}
 
-#### Worker Role
+* Delete inventory
 
-* Login successful
-* Access to worker-only routes verified
-* Access to inventory-access route verified
-* Access denied to owner-only routes
+---
 
-#### Accountant Role
+## Future Modules
 
-* Login successful
-* Access to accountant-only routes verified
-* Access denied to inventory-access route
-* Access denied to owner-only routes
+### Transaction Management
 
-### Authorization Verification
+Planned:
 
-* 403 Forbidden responses working correctly
-* Role validation working correctly
-* JWT authentication integrated with RBAC
-* Multi-role authorization verified
+* Purchase Transactions
+* Sales Transactions
+* Inventory Reduction
+* Profit Calculation
 
-### Current Status
+### Reporting
+
+Planned:
+
+* Inventory Reports
+* Profit Reports
+* Supplier Reports
+* Business Dashboard
+
+---
+
+# Latest Achievement
+
+Successfully implemented:
+
+* Authentication System
+* Authorization System
+* OAuth2 Integration
+* Role-Based Access Control
+* Inventory Management MVP
+* Inventory RBAC
+* Inventory APIs
+* MySQL Integration
+
+Current Project Status:
 
 Authentication System: ✅ Completed
 
@@ -378,64 +493,6 @@ Authorization System: ✅ Completed
 
 RBAC System: ✅ Completed
 
-Inventory Module Progress
+Inventory Module MVP: ✅ Completed
 
-Completed:
-- Inventory requirements finalized
-- Inventory model created
-- Foreign key relationship added
-- Inventories table created
-- InventoryCreate schema created
-- InventoryResponse schema created
-- Inventory Service Layer Add Inventory
-Next:
-- Inventory Routes
-- Add Inventory API
-- Inventory RBAC Integration
-
-### Services
-
-* Add Inventory
-* Update Inventory
-* Delete Inventory
-* View Inventory
-
-### Routes
-
-POST /inventory
-GET /inventory
-PUT /inventory/{id}
-DELETE /inventory/{id}
-
-### Permissions
-
-Owner:
-
-* Full Access
-
-Worker:
-
-* Add Inventory
-* Update Inventory
-* View Inventory
-
-Accountant:
-
-* View Inventory Only
-
----
-
-# Latest Achievement
-
-Successfully implemented a production-style authentication and authorization foundation using:
-
-* FastAPI
-* SQLAlchemy
-* JWT Authentication
-* OAuth2
-* Swagger Authorization
-* Protected Routes
-* Current User Dependency
-* Role-Based Access Control Foundation
-
-Project is now ready for Inventory Module development.
+Project is ready for Inventory CRUD completion and Transaction Management development.

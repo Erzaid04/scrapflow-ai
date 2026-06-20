@@ -19,3 +19,6 @@ def add_inventory(
     db.commit()
     db.refresh(inventory)
     return inventory
+
+def get_all_inventories(db:Session):
+    return db.query(Inventory).all()

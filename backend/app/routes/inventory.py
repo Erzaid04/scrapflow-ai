@@ -5,6 +5,7 @@ from app.dependencies.roles import require_roles
 from app.schemas.inventory import InventoryCreate
 from app.services.inventory_service import add_inventory
 from app.routes.auth import get_db
+from app.services.inventory_service import get_all_inventories
 router = APIRouter(
     prefix = "/api/v1/inventory",
     tags=["Inventory"]
@@ -26,4 +27,19 @@ def create_inventory(
         inventory_data=inventory_data,
         user_id = current_user.id
     )
+    return inventory
+
+@router.get("/")
+def get_inventory(
+    
+    current_user = Depends(
+        require_roles(
+            "owner",
+            "worker",
+            "accountant"
+        )
+    ),
+    db:Session=Depends(get_db)
+):
+    inventory = get_all_inventories(db=db)
     return inventory
