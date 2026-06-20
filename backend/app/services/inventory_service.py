@@ -11,6 +11,7 @@ def add_inventory(
         material_name = inventory_data.material_name,
         quantity = inventory_data.quantity,
         unit = inventory_data.unit,
+        purchase_price_per_unit=inventory_data.purchase_price_per_unit,
         supplier_name = inventory_data.supplier_name,
         created_by = user_id
     )
