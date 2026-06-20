@@ -387,9 +387,8 @@ Completed:
 - Inventories table created
 - InventoryCreate schema created
 - InventoryResponse schema created
-
+- Inventory Service Layer Add Inventory
 Next:
-- Inventory Service Layer
 - Inventory Routes
 - Add Inventory API
 - Inventory RBAC Integration
