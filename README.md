@@ -61,19 +61,19 @@ Digitize scrap collection, inventory tracking, sales management, profitability t
 
 ## Architecture
 
-*Frontend
-*↓
-*Routes
-*↓
-*Schemas
-*↓
-*Services
-*↓
-*Security / JWT
-*↓
-*Models
-*↓
-*Database
+* Frontend
+* ↓
+* Routes
+* ↓
+* Schemas
+* ↓
+* Services
+* ↓
+* Security / JWT
+* ↓
+* Models
+* ↓
+* Database
 
 ---
 
