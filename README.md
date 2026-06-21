@@ -149,16 +149,16 @@ Phase 2: Inventory Management
 
 ## Project Structure
 
-backend/
-├── app/
-│ ├── auth/
-│ ├── database/
-│ ├── models/
-│ ├── routes/
-│ ├── schemas/
-│ └── services/
-├── docs/
-└── main.py
+# backend/
+* ├── app/
+* │ ├── auth/
+* │ ├── database/
+* │ ├── models/
+* │ ├── routes/
+* │ ├── schemas/
+* │ └── services/
+* ├── docs/
+* └── main.py
 
 ---
 
