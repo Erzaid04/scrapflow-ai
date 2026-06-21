@@ -61,19 +61,19 @@ Digitize scrap collection, inventory tracking, sales management, profitability t
 
 ## Architecture
 
-Frontend
-↓
-Routes
-↓
-Schemas
-↓
-Services
-↓
-Security / JWT
-↓
-Models
-↓
-Database
+*Frontend
+*↓
+*Routes
+*↓
+*Schemas
+*↓
+*Services
+*↓
+*Security / JWT
+*↓
+*Models
+*↓
+*Database
 
 ---
 
@@ -121,9 +121,9 @@ Phase 2: Inventory Management
 * [x] Inventory Tracking
 * [x] Inventory Create API
 * [x] Inventory List API
-* [ ] Inventory Update API
-* [ ] Inventory Delete API
-* [ ] Inventory By ID API
+* [x] Inventory Update API
+* [x] Inventory Delete API
+* [x] Inventory By ID API
 
 ### Phase 3: Business Operations
 
