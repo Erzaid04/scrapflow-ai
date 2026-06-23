@@ -53,6 +53,7 @@ def create_transaction(
         party_name=transaction_data.party_name,
         created_by=current_user_id
     )
+    
     db.add(transaction)
     db.commit()
     db.refresh(transaction)
