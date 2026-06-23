@@ -1,0 +1,21 @@
+from fastapi import APIRouter, Depends
+from app.routes.auth import get_db
+from sqlalchemy.orm import Session
+from app.schemas.transaction import (TransactionCreate, TransactionResponse)
+from app.services.transaction_service import create_transaction
+from app.dependencies.roles import get_current_user
+
+router = APIRouter()
+
+@router.post("/transactions",response_model = TransactionResponse)
+def create_new_transaction(
+    transaction_data:TransactionCreate,
+    db:Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+    
+):
+    return create_transaction(
+        db,
+        transaction_data,
+        current_user
+    )
