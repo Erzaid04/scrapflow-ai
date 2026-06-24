@@ -12,7 +12,7 @@ class BuyerResponse(BaseModel):
     id:int
     name:str
     phone:str
-    adress:Optional[str] = None
+    address:Optional[str] = None
     created_by:int
     created_at:datetime
         

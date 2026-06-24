@@ -21,12 +21,12 @@ def create_buyer(
     buyer = Buyer(
         name = buyer_data.name,
         phone = buyer_data.phone,
-        adress = buyer_data.address,
+        address = buyer_data.address,
         created_by = current_user.id
         
     )
     db.add(buyer)
-    db.commit
+    db.commit()
     db.refresh(buyer)
     return buyer
 

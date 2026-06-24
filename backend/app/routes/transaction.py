@@ -7,7 +7,10 @@ from app.dependencies.roles import get_current_user
 from app.dependencies.roles import require_roles
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix = "/api/v1/transaction",
+    tags=["Transaction"]
+)
 
 @router.post("/transactions",response_model = TransactionResponse)
 def create_new_transaction(
