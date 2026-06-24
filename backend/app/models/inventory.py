@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy import ForeignKey
 from app.models.base import Base
 
+
 class Inventory(Base):
     __tablename__ ="inventories"
     
@@ -14,4 +15,5 @@ class Inventory(Base):
     supplier_name = Column(String(100),nullable=False)
     created_by = Column(Integer,ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime,server_default=func.now())
+    
     

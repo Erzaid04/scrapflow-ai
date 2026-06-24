@@ -4,6 +4,7 @@ from app.models.base import Base
 from app.models.user import User
 from app.models.inventory import Inventory
 from app.models.transaction import Transaction
+from  app.models.buyer import Buyer
 print("creating tables...")
 Base.metadata.create_all(bind= engine)
 print("Tables created successfully")
