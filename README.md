@@ -4,7 +4,7 @@ AI-powered operating system for scrap collectors, traders, and recycling busines
 
 ## Vision
 
-Digitize scrap collection, inventory tracking, transaction management, sales management, profitability tracking, and business operations through a modern SaaS platform.
+Digitize scrap collection, inventory tracking, transaction management, buyer management, profitability tracking, and business operations through a modern SaaS platform.
 
 ---
 
@@ -44,11 +44,22 @@ Digitize scrap collection, inventory tracking, transaction management, sales man
 
 * Transaction model
 * Purchase transactions
-* Sales transactions
+* Sale transactions
 * Inventory synchronization
 * Automatic stock updates
 * Inventory validation
 * Transaction RBAC
+* End-to-end API testing
+
+### Buyer Management
+
+* Buyer model
+* Buyer APIs
+* Buyer service layer
+* Buyer validation
+* Duplicate phone prevention
+* Buyer RBAC
+* MySQL persistence
 * End-to-end API testing
 
 ### Testing
@@ -58,6 +69,7 @@ Digitize scrap collection, inventory tracking, transaction management, sales man
 * RBAC testing
 * Inventory CRUD testing
 * Transaction workflow testing
+* Buyer workflow testing
 
 ---
 
@@ -90,20 +102,6 @@ Digitize scrap collection, inventory tracking, transaction management, sales man
 
 # Architecture
 
-* Frontend
-* ↓
-* Routes
-* ↓
-* Schemas
-* ↓
-* Services
-* ↓
-* Security / JWT
-* ↓
-* Models
-* ↓
-* Database
-=======
 Frontend
 ↓
 Routes
@@ -130,35 +128,13 @@ Database
 
 POST /api/v1/auth/register
 
-Features:
-
-* Email validation
-* Phone validation
-* Password hashing
-* User creation
-
----
-
 ### Login User
 
 POST /api/v1/auth/login
 
-Features:
-
-* Credential verification
-* JWT token generation
-* Bearer token authentication
-
----
-
 ### OAuth2 Token
 
 POST /api/v1/auth/token
-
-Features:
-
-* OAuth2 login support
-* Swagger authorization support
 
 ---
 
@@ -167,11 +143,6 @@ Features:
 ### Current User
 
 GET /api/v1/users/me
-
-Features:
-
-* Returns authenticated user
-* Protected route
 
 ---
 
@@ -211,7 +182,22 @@ Features:
 * Sale transactions
 * Inventory synchronization
 * Stock validation
-* Transaction history creation
+
+---
+
+## Buyer APIs
+
+### Create Buyer
+
+POST /api/v1/buyers
+
+### Get All Buyers
+
+GET /api/v1/buyers
+
+### Get Buyer By ID
+
+GET /api/v1/buyers/{buyer_id}
 
 ---
 
@@ -223,6 +209,7 @@ Permissions:
 
 * Manage inventory
 * Manage transactions
+* Manage buyers
 * Full system access
 
 ---
@@ -234,7 +221,9 @@ Permissions:
 * Create inventory
 * Update inventory
 * Create transactions
+* Create buyers
 * View inventory
+* View buyers
 
 ---
 
@@ -243,6 +232,7 @@ Permissions:
 Permissions:
 
 * View inventory
+* View buyers
 * View business data
 * Restricted from inventory modifications
 * Restricted from transaction creation
@@ -258,16 +248,6 @@ When a purchase transaction is created:
 * Transaction is recorded
 * Inventory quantity increases automatically
 
-Example:
-
-100 kg Inventory
-
-Purchase 50 kg
-
-Result:
-
-150 kg Inventory
-
 ---
 
 ## Sale Transaction
@@ -276,16 +256,6 @@ When a sale transaction is created:
 
 * Transaction is recorded
 * Inventory quantity decreases automatically
-
-Example:
-
-100 kg Inventory
-
-Sale 20 kg
-
-Result:
-
-80 kg Inventory
 
 ---
 
@@ -296,6 +266,15 @@ The system prevents:
 * Negative inventory
 * Selling unavailable stock
 * Invalid inventory references
+
+---
+
+## Buyer Validation
+
+The system prevents:
+
+* Duplicate phone numbers
+* Invalid buyer references
 
 ---
 
@@ -315,10 +294,6 @@ The system prevents:
 
 * [x] Inventory Create API
 * [x] Inventory List API
-* [x] Inventory Update API
-* [x] Inventory Delete API
-* [x] Inventory By ID API
-
 * [x] Inventory By ID API
 * [x] Inventory Update API
 * [x] Inventory Delete API
@@ -337,10 +312,11 @@ The system prevents:
 
 ## Phase 4: Buyer Management
 
-* [ ] Buyer Registration
-* [ ] Buyer Search
-* [ ] Buyer History
-* [ ] Buyer Integration with Transactions
+* [x] Buyer Registration
+* [x] Buyer Search
+* [x] Buyer History Foundation
+* [x] Buyer APIs
+* [x] Buyer RBAC
 
 ---
 
@@ -357,6 +333,7 @@ The system prevents:
 
 * [ ] Inventory Reports
 * [ ] Transaction Reports
+* [ ] Buyer Reports
 * [ ] Profit Reports
 * [ ] Business Dashboard
 
@@ -373,18 +350,6 @@ The system prevents:
 
 # Project Structure
 
-
-# backend/
-* ├── app/
-* │ ├── auth/
-* │ ├── database/
-* │ ├── models/
-* │ ├── routes/
-* │ ├── schemas/
-* │ └── services/
-* ├── docs/
-* └── main.py
-=======
 backend/
 ├── app/
 │
@@ -412,11 +377,12 @@ Successfully implemented:
 * Role-Based Access Control (RBAC)
 * Inventory CRUD Module
 * Transaction Management Module
+* Buyer Management Module
 * Inventory Synchronization Engine
 * Business Rule Validation
 * Swagger API Testing
 
-Current platform supports secure multi-role access for Owners, Workers, and Accountants with complete inventory and transaction management workflows.
+Current platform supports secure multi-role access for Owners, Workers, and Accountants with inventory management, transaction processing, and buyer management workflows.
 
 ---
 
@@ -432,4 +398,6 @@ Inventory CRUD Module: ✅ Completed
 
 Transaction Management Module: ✅ Completed
 
-Next Module: 🚀 Buyer Management
+Buyer Management Module: ✅ Completed
+
+Next Module: 🚀 Profit Engine
