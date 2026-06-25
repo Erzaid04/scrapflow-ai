@@ -50,6 +50,8 @@ class Transaction(Base):
         Float,
         nullable=False
     )
+    purchase_price_per_unit = Column(Float,nullable=True)
+    
 
     party_name = Column(
         String(255),

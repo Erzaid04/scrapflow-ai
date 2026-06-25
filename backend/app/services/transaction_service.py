@@ -40,6 +40,10 @@ def create_transaction(
         db,
         transaction_data.inventory_id
     )
+    if transaction_data.transaction_type == TransactionType.SALE:
+        purchase_price_snapshot = inventory.purchase_price_per_unit
+    else:
+        purchase_price_snapshot = None
     update_invnetory_for_transaction(
         inventory,
         transaction_data
@@ -50,6 +54,7 @@ def create_transaction(
         inventory_id=transaction_data.inventory_id,
         quantity=transaction_data.quantity,
         price_per_unit=transaction_data.price_per_unit,
+        purchase_price_per_unit = purchase_price_snapshot,
         party_name=transaction_data.party_name,
         created_by=current_user_id
     )

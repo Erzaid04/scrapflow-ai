@@ -13,6 +13,7 @@ class TransactionResponse(BaseModel):
     inventory_id:int
     quantity:float
     price_per_unit:float
+    purchase_price_per_unit:float | None = None
     party_name:str
     transaction_type:TransactionType
     created_by:int
