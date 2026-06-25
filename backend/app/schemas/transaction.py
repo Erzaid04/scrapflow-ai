@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,ConfigDict
 from app.models.transaction import TransactionType
 from datetime import datetime
 class TransactionCreate(BaseModel):
@@ -19,8 +19,7 @@ class TransactionResponse(BaseModel):
     created_by:int
     created_at:datetime
     
-    class Config:
-        form_attributes = True
+    model_config = ConfigDict(from_attributes=True)
         
     
     
