@@ -2,27 +2,29 @@
 
 ## Project Overview
 
-ScrapFlow AI is a SaaS platform for scrap business management built using FastAPI, MySQL, SQLAlchemy, JWT Authentication, OAuth2, and Role-Based Access Control (RBAC).
+ScrapFlow AI is a SaaS platform for scrap collectors, traders, and recycling businesses, built using **FastAPI**, **MySQL**, **SQLAlchemy**, **JWT Authentication**, **OAuth2**, and **Role-Based Access Control (RBAC)**.
 
 ---
 
 # Project Architecture
 
+```text
 Frontend
-↓
+    ↓
 Routes
-↓
+    ↓
 Schemas
-↓
+    ↓
 Services
-↓
+    ↓
 Dependencies
-↓
+    ↓
 Security / JWT
-↓
+    ↓
 Models
-↓
+    ↓
 Database
+```
 
 ---
 
@@ -45,21 +47,21 @@ Database
 
 ## User Model
 
-Created:
+**Created**
 
-app/models/user.py
+* `app/models/user.py`
 
-Implemented:
+### Implemented
 
 * User model
 * Users table
 * Role management
 
-Roles:
+### Roles
 
-* owner
-* worker
-* accountant
+* Owner
+* Worker
+* Accountant
 
 ---
 
@@ -67,7 +69,7 @@ Roles:
 
 ## Password Security
 
-Implemented:
+### Implemented
 
 * bcrypt password hashing
 * Password verification
@@ -77,105 +79,79 @@ Implemented:
 
 ## JWT Authentication
 
-Environment Variables:
+### Environment Variables
 
 * SECRET_KEY
 * ALGORITHM (HS256)
 * ACCESS_TOKEN_EXPIRE_MINUTES
 
-Created:
+### Created
 
-app/auth/jwt_handler.py
+* `app/auth/jwt_handler.py`
 
-Implemented:
+### Implemented
 
 * create_access_token()
 * verify_access_token()
 
-JWT Payload:
-
-```json
-{
-  "sub": "user_id",
-  "role": "user_role",
-  "exp": "expiration_time"
-}
-```
-
 ---
 
-# Registration Module
+# Authentication Module
 
-## Endpoint
+## Registration
 
-POST /api/v1/auth/register
+**Endpoint**
+
+`POST /api/v1/auth/register`
 
 ### Features
 
-* User registration schema
 * Email uniqueness validation
-* Phone number uniqueness validation
-* Password hashing before storage
-* User creation workflow
-* Registration API tested successfully
+* Phone uniqueness validation
+* Password hashing
+* User registration
 
 ---
 
-# Login Module
+## Login
 
-## Endpoint
+**Endpoint**
 
-POST /api/v1/auth/login
+`POST /api/v1/auth/login`
 
 ### Features
 
-* Login schema
-* User lookup by email
-* Password verification workflow
-* Authentication service
+* User authentication
+* Password verification
 * JWT token generation
-* Login API tested successfully
 
 ---
 
-# OAuth2 Integration
+## OAuth2 Integration
 
-## Endpoint
+**Endpoint**
 
-POST /api/v1/auth/token
+`POST /api/v1/auth/token`
 
 ### Implemented
 
 * OAuth2PasswordBearer
 * OAuth2PasswordRequestForm
-* Swagger OAuth2 integration
-* Swagger Authorize button working
-* Automatic JWT injection
+* Swagger Authorization support
 
 ---
 
 # Protected Routes
 
-Created:
+## Endpoint
 
-app/dependencies/auth.py
+`GET /api/v1/users/me`
 
-### Implemented
+### Features
 
-* OAuth2PasswordBearer configuration
-* get_current_user() dependency
-* JWT extraction
 * JWT verification
-* User retrieval from database
+* Current authenticated user
 * Protected route support
-
-### Endpoint
-
-GET /api/v1/users/me
-
-Purpose:
-
-* Return currently authenticated user
 
 ---
 
@@ -185,39 +161,28 @@ Status: ✅ Completed
 
 ## RBAC
 
-Created:
+### Implemented
 
-app/dependencies/roles.py
-
-Implemented:
-
-* require_roles() dependency factory
-* Role validation logic
+* Role validation
 * Permission checking
 * 403 Forbidden handling
 
-### RBAC Testing
+### Verified
 
-* Owner access verified
-* Worker access verified
-* Accountant access verified
-* Multi-role authorization verified
+* Owner permissions
+* Worker permissions
+* Accountant permissions
 * JWT integrated with RBAC
-* 403 Forbidden responses verified
 
 ---
 
-# Inventory Module
+# Inventory Management Module
 
-Status: ✅ CRUD Completed
+Status: ✅ Completed
 
-## Inventory Model
+## Model
 
-Created:
-
-app/models/inventory.py
-
-Implemented:
+### Fields
 
 * id
 * material_name
@@ -230,59 +195,24 @@ Implemented:
 
 ### Features
 
-* Foreign Key relationship with users table
-* Automatic timestamp generation
+* User relationship
+* Automatic timestamps
 
 ---
 
-## Schemas
+## APIs
 
-Created:
+* POST `/api/v1/inventory`
+* GET `/api/v1/inventory`
+* GET `/api/v1/inventory/{id}`
+* PUT `/api/v1/inventory/{id}`
+* DELETE `/api/v1/inventory/{id}`
 
-app/schemas/inventory.py
+### Testing
 
-Implemented:
-
-* InventoryCreate
-* InventoryUpdate
-* InventoryResponse
-
----
-
-## Service Layer
-
-Created:
-
-app/services/inventory_service.py
-
-Implemented:
-
-* add_inventory()
-* get_all_inventory()
-* get_inventory_by_id()
-* update_inventory()
-* delete_inventory()
-
----
-
-## Inventory APIs
-
-* POST /api/v1/inventory
-* GET /api/v1/inventory
-* GET /api/v1/inventory/{id}
-* PUT /api/v1/inventory/{id}
-* DELETE /api/v1/inventory/{id}
-
----
-
-## Inventory Testing
-
-* Create tested
-* Read tested
-* Update tested
-* Delete tested
-* MySQL persistence verified
+* CRUD verified
 * RBAC verified
+* MySQL persistence verified
 
 ---
 
@@ -290,15 +220,9 @@ Implemented:
 
 Status: ✅ Completed
 
-## Transaction Model
+## Model
 
-Created:
-
-app/models/transaction.py
-
-Implemented:
-
-### TransactionType Enum
+### Transaction Types
 
 * PURCHASE
 * SALE
@@ -321,62 +245,32 @@ Implemented:
 
 ---
 
-## Schemas
-
-Created:
-
-app/schemas/transaction.py
-
-Implemented:
-
-* TransactionCreate
-* TransactionResponse
-
----
-
-## Service Layer
-
-Created:
-
-app/services/transaction_service.py
-
-Implemented:
-
-* validate_inventory_exists()
-* update_inventory_for_transaction()
-* create_transaction()
-
----
-
 ## Business Rules
 
-### Purchase Transaction
+### Purchase
 
-* Automatically increases inventory
+* Inventory automatically increases
 
-### Sale Transaction
+### Sale
 
-* Automatically decreases inventory
+* Inventory automatically decreases
 
-### Inventory Validation
+### Validation
 
-* Prevents negative inventory
-* Prevents invalid sales
-
----
-
-## Transaction API
-
-* POST /api/v1/transactions
+* Prevent negative inventory
+* Prevent invalid sales
 
 ---
 
-## Transaction Testing
+## API
 
-* Purchase workflow verified
-* Sale workflow verified
+* POST `/api/v1/transactions`
+
+### Testing
+
+* Purchase verified
+* Sale verified
 * Inventory synchronization verified
-* Insufficient inventory validation verified
 * RBAC verified
 
 ---
@@ -385,13 +279,9 @@ Implemented:
 
 Status: ✅ Completed
 
-## Buyer Model
+## Model
 
-Created:
-
-app/models/buyer.py
-
-Implemented:
+### Fields
 
 * id
 * name
@@ -403,174 +293,165 @@ Implemented:
 ### Features
 
 * Unique phone validation
-* Foreign Key relationship with users table
-* Relationship(User)
+* User relationship
 * Audit tracking
 
 ---
 
-## Database
+## APIs
 
-Completed:
-
-* Buyers table created
-* Foreign key constraints configured
-* MySQL verification completed
-
----
-
-## Schemas
-
-Created:
-
-app/schemas/buyer.py
-
-Implemented:
-
-* BuyerCreate
-* BuyerResponse
-
----
-
-## Service Layer
-
-Created:
-
-app/services/buyer_service.py
-
-Implemented:
-
-* create_buyer()
-* get_all_buyers()
-* get_buyer_by_id()
+* POST `/api/v1/buyers`
+* GET `/api/v1/buyers`
+* GET `/api/v1/buyers/{buyer_id}`
 
 ### Business Rules
 
 * Duplicate phone prevention
 * Buyer existence validation
 
----
+### Testing
 
-## Buyer APIs
-
-### Create Buyer
-
-POST /api/v1/buyers
-
-Permissions:
-
-* owner ✅
-* worker ✅
-* accountant ❌
-
-### Get All Buyers
-
-GET /api/v1/buyers
-
-Permissions:
-
-* owner ✅
-* worker ✅
-* accountant ✅
-
-### Get Buyer By ID
-
-GET /api/v1/buyers/{buyer_id}
-
-Permissions:
-
-* owner ✅
-* worker ✅
-* accountant ✅
+* Create verified
+* Get All verified
+* Get By ID verified
+* RBAC verified
+* Swagger verified
 
 ---
 
-## Buyer Testing
+# Supplier Management Module
 
-Completed:
+Status: ✅ Completed
 
-* Create Buyer tested
-* Get All Buyers tested
-* Get Buyer By ID tested
+## Model
+
+### Fields
+
+* id
+* name
+* phone
+* address
+* created_by
+* created_at
+
+### Features
+
+* Unique phone validation
+* User relationship
+* Audit tracking
+
+---
+
+## APIs
+
+* POST `/api/v1/suppliers`
+* GET `/api/v1/suppliers`
+* GET `/api/v1/suppliers/{supplier_id}`
+
+### Business Rules
+
+* Duplicate phone prevention
+* Supplier existence validation
+
+### Testing
+
+* Create verified
+* Get All verified
+* Get By ID verified
 * Duplicate phone validation verified
-* RBAC permissions verified
-* Swagger testing completed
+* RBAC verified
+* Swagger verified
 
 ---
 
-# APIs Completed
+# Implemented APIs
 
-## Authentication APIs
+## Authentication
 
-* POST /api/v1/auth/register
-* POST /api/v1/auth/login
-* POST /api/v1/auth/token
+* POST `/api/v1/auth/register`
+* POST `/api/v1/auth/login`
+* POST `/api/v1/auth/token`
 
-## User APIs
+## User
 
-* GET /api/v1/users/me
+* GET `/api/v1/users/me`
 
-## Inventory APIs
+## Inventory
 
-* POST /api/v1/inventory
-* GET /api/v1/inventory
-* GET /api/v1/inventory/{id}
-* PUT /api/v1/inventory/{id}
-* DELETE /api/v1/inventory/{id}
+* POST `/api/v1/inventory`
+* GET `/api/v1/inventory`
+* GET `/api/v1/inventory/{id}`
+* PUT `/api/v1/inventory/{id}`
+* DELETE `/api/v1/inventory/{id}`
 
-## Transaction APIs
+## Transactions
 
-* POST /api/v1/transactions
+* POST `/api/v1/transactions`
 
-## Buyer APIs
+## Buyers
 
-* POST /api/v1/buyers
-* GET /api/v1/buyers
-* GET /api/v1/buyers/{buyer_id}
+* POST `/api/v1/buyers`
+* GET `/api/v1/buyers`
+* GET `/api/v1/buyers/{buyer_id}`
+
+## Suppliers
+
+* POST `/api/v1/suppliers`
+* GET `/api/v1/suppliers`
+* GET `/api/v1/suppliers/{supplier_id}`
 
 ---
 
 # Technical Concepts Learned
 
+* FastAPI
 * SQLAlchemy ORM
+* MySQL
+* Pydantic
+* CRUD Operations
 * Database Sessions
 * Models
 * Schemas
-* Routes
 * Service Layer
 * Dependency Injection
 * JWT Authentication
 * OAuth2
 * Protected Routes
 * Current User Pattern
-* RBAC
+* Role-Based Access Control (RBAC)
 * Password Hashing
 * Environment Variables
 * Foreign Keys
 * Relationships
-* CRUD Operations
-* Layered Backend Architecture
 * Business Rule Validation
 * Inventory Synchronization
 * Transaction Processing
 * Buyer Management
+* Supplier Management
+* Layered Backend Architecture
 * Domain Logic Separation
 
 ---
 
-# Current Status
+# Current Project Status
 
-Authentication System: ✅ Completed
+✅ Authentication System
 
-Authorization System: ✅ Completed
+✅ Authorization System
 
-RBAC System: ✅ Completed
+✅ JWT Authentication
 
-Inventory CRUD Module: ✅ Completed
+✅ OAuth2 Integration
 
-Transaction Management Module: ✅ Completed
+✅ RBAC System
 
-Buyer Management Module: ✅ Completed
+✅ Inventory Management Module
+
+✅ Transaction Management Module
+
+✅ Buyer Management Module
+
+✅ Supplier Management Module
 
 ---
 
@@ -578,26 +459,29 @@ Buyer Management Module: ✅ Completed
 
 ## Profit Engine Module
 
-Planned Features:
+### Planned Features
 
-### Profit Calculation
+#### Profit Calculation
 
 * Revenue calculation
 * Cost calculation
 * Profit per transaction
 * Total profit tracking
 
-### Business Analytics
+#### Business Analytics
 
-* Monthly profit reports
 * Revenue reports
-* Sales reports
+* Profit reports
+* Monthly analytics
+* Supplier analytics
+* Buyer analytics
 
-### Dashboard Metrics
+#### Dashboard Metrics
 
-* Total inventory value
-* Revenue generated
-* Profit generated
+* Total Inventory Value
+* Total Revenue
+* Total Cost
+* Total Profit
 
 ---
 
@@ -608,14 +492,15 @@ Planned Features:
 * Inventory Reports
 * Transaction Reports
 * Buyer Reports
+* Supplier Reports
 * Profit Reports
 
 ## Dashboard
 
 * Business Overview
-* Revenue Metrics
-* Profit Metrics
-* Inventory Metrics
+* Revenue Analytics
+* Profit Analytics
+* Inventory Analytics
 
 ## AI Features
 
@@ -632,19 +517,22 @@ Successfully implemented:
 
 * Authentication System
 * Authorization System
-* OAuth2 Integration
 * JWT Authentication
+* OAuth2 Integration
 * Role-Based Access Control (RBAC)
 * Inventory Management Module
 * Transaction Management Module
 * Buyer Management Module
+* Supplier Management Module
 * Inventory Synchronization Engine
 * Business Rule Validation
 * Service Layer Architecture
 * MySQL Integration
 * Swagger API Testing
 
-Current Project Status:
+---
+
+# Current Project Status
 
 ✅ Authentication System
 
@@ -652,10 +540,12 @@ Current Project Status:
 
 ✅ RBAC System
 
-✅ Inventory CRUD Module
+✅ Inventory Management Module
 
 ✅ Transaction Management Module
 
 ✅ Buyer Management Module
 
-🚀 Next Module: Profit Engine
+✅ Supplier Management Module
+
+🚀 Next Module: **Profit Engine**
