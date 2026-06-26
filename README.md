@@ -1,16 +1,20 @@
 # ScrapFlow AI
 
-AI-powered operating system for scrap collectors, traders, and recycling businesses.
+An AI-powered SaaS platform for scrap collectors, traders, and recycling businesses.
 
-## Vision
+ScrapFlow AI is designed to digitize inventory management, transaction processing, supplier and buyer management, profitability tracking, and business operations through a secure, scalable backend architecture.
 
-Digitize scrap collection, inventory tracking, transaction management, buyer management, profitability tracking, and business operations through a modern SaaS platform.
+---
+
+# Vision
+
+Build a modern operating system for the scrap recycling industry by replacing manual record-keeping with intelligent, data-driven business management.
 
 ---
 
 # Current Status
 
-## Completed
+## ✅ Completed
 
 ### Backend Foundation
 
@@ -18,58 +22,65 @@ Digitize scrap collection, inventory tracking, transaction management, buyer man
 * MySQL database integration
 * SQLAlchemy ORM configuration
 * Database session management
-* Layered architecture implementation
+* Layered Architecture (Routes → Schemas → Services → Models)
+* Dependency Injection
 
 ### Authentication & Authorization
 
-* User model implementation
-* Password hashing with bcrypt
-* User registration API
-* User login API
-* JWT authentication
-* OAuth2 integration
-* Protected routes
-* Current user API
+* User Management
+* Password Hashing (bcrypt)
+* User Registration API
+* User Login API
+* JWT Authentication
+* OAuth2 Integration
+* Protected Routes
+* Current User API
 * Role-Based Access Control (RBAC)
 
 ### Inventory Management
 
-* Inventory model
+* Inventory Model
 * Inventory CRUD APIs
+* Inventory Validation
 * Inventory RBAC
-* Inventory validation
-* MySQL persistence
+* MySQL Persistence
 
 ### Transaction Management
 
-* Transaction model
-* Purchase transactions
-* Sale transactions
-* Inventory synchronization
-* Automatic stock updates
-* Inventory validation
+* Purchase Transactions
+* Sale Transactions
+* Automatic Inventory Synchronization
+* Stock Validation
 * Transaction RBAC
-* End-to-end API testing
+* End-to-End API Testing
 
 ### Buyer Management
 
-* Buyer model
-* Buyer APIs
-* Buyer service layer
-* Buyer validation
-* Duplicate phone prevention
+* Buyer Model
+* Buyer CRUD Foundation
+* Duplicate Phone Validation
 * Buyer RBAC
-* MySQL persistence
-* End-to-end API testing
+* MySQL Persistence
+* End-to-End API Testing
+
+### Supplier Management
+
+* Supplier Model
+* Supplier CRUD Foundation
+* Duplicate Phone Validation
+* Supplier RBAC
+* MySQL Persistence
+* End-to-End API Testing
 
 ### Testing
 
-* Swagger API testing
-* Authentication testing
-* RBAC testing
-* Inventory CRUD testing
-* Transaction workflow testing
-* Buyer workflow testing
+* Swagger UI Testing
+* Authentication Testing
+* RBAC Testing
+* Inventory Testing
+* Transaction Testing
+* Buyer Testing
+* Supplier Testing
 
 ---
 
@@ -92,7 +103,7 @@ Digitize scrap collection, inventory tracking, transaction management, buyer man
 * CSS
 * JavaScript
 
-## Dev Tools
+## Developer Tools
 
 * Git
 * GitHub
@@ -102,267 +113,234 @@ Digitize scrap collection, inventory tracking, transaction management, buyer man
 
 # Architecture
 
+```text
 Frontend
-↓
+    ↓
 Routes
-↓
+    ↓
 Schemas
-↓
+    ↓
 Services
-↓
+    ↓
 Dependencies
-↓
+    ↓
 Security / JWT
-↓
+    ↓
 Models
-↓
+    ↓
 Database
+```
 
 ---
 
 # Implemented APIs
 
-## Authentication APIs
+## Authentication
 
-### Register User
-
-POST /api/v1/auth/register
-
-### Login User
-
-POST /api/v1/auth/login
-
-### OAuth2 Token
-
-POST /api/v1/auth/token
+| Method | Endpoint              |
+| ------ | --------------------- |
+| POST   | /api/v1/auth/register |
+| POST   | /api/v1/auth/login    |
+| POST   | /api/v1/auth/token    |
 
 ---
 
-## User APIs
+## User
 
-### Current User
-
-GET /api/v1/users/me
-
----
-
-## Inventory APIs
-
-### Create Inventory
-
-POST /api/v1/inventory
-
-### View Inventory
-
-GET /api/v1/inventory
-
-### View Inventory By ID
-
-GET /api/v1/inventory/{id}
-
-### Update Inventory
-
-PUT /api/v1/inventory/{id}
-
-### Delete Inventory
-
-DELETE /api/v1/inventory/{id}
+| Method | Endpoint         |
+| ------ | ---------------- |
+| GET    | /api/v1/users/me |
 
 ---
 
-## Transaction APIs
+## Inventory
 
-### Create Transaction
-
-POST /api/v1/transactions
-
-Features:
-
-* Purchase transactions
-* Sale transactions
-* Inventory synchronization
-* Stock validation
+| Method | Endpoint               |
+| ------ | ---------------------- |
+| POST   | /api/v1/inventory      |
+| GET    | /api/v1/inventory      |
+| GET    | /api/v1/inventory/{id} |
+| PUT    | /api/v1/inventory/{id} |
+| DELETE | /api/v1/inventory/{id} |
 
 ---
 
-## Buyer APIs
+## Transactions
 
-### Create Buyer
-
-POST /api/v1/buyers
-
-### Get All Buyers
-
-GET /api/v1/buyers
-
-### Get Buyer By ID
-
-GET /api/v1/buyers/{buyer_id}
+| Method | Endpoint             |
+| ------ | -------------------- |
+| POST   | /api/v1/transactions |
 
 ---
 
-# Roles
+## Buyers
+
+| Method | Endpoint                  |
+| ------ | ------------------------- |
+| POST   | /api/v1/buyers            |
+| GET    | /api/v1/buyers            |
+| GET    | /api/v1/buyers/{buyer_id} |
+
+---
+
+## Suppliers
+
+| Method | Endpoint                        |
+| ------ | ------------------------------- |
+| POST   | /api/v1/suppliers               |
+| GET    | /api/v1/suppliers               |
+| GET    | /api/v1/suppliers/{supplier_id} |
+
+---
+
+# User Roles
 
 ## Owner
 
-Permissions:
-
-* Manage inventory
-* Manage transactions
-* Manage buyers
 * Full system access
+* Inventory Management
+* Transaction Management
+* Buyer Management
+* Supplier Management
 
 ---
 
 ## Worker
 
-Permissions:
-
-* Create inventory
-* Update inventory
-* Create transactions
-* Create buyers
-* View inventory
-* View buyers
+* Create Inventory
+* Update Inventory
+* Create Transactions
+* Manage Buyers
+* Manage Suppliers
+* View Inventory
 
 ---
 
 ## Accountant
 
-Permissions:
-
-* View inventory
-* View buyers
-* View business data
-* Restricted from inventory modifications
-* Restricted from transaction creation
+* View Inventory
+* View Buyers
+* View Suppliers
+* View Business Data
 
 ---
 
 # Business Rules
 
-## Purchase Transaction
+## Purchase Transactions
 
-When a purchase transaction is created:
+* Record purchase transaction
+* Automatically increase inventory
 
-* Transaction is recorded
-* Inventory quantity increases automatically
+## Sale Transactions
 
----
-
-## Sale Transaction
-
-When a sale transaction is created:
-
-* Transaction is recorded
-* Inventory quantity decreases automatically
-
----
+* Record sale transaction
+* Automatically decrease inventory
 
 ## Inventory Validation
 
-The system prevents:
-
-* Negative inventory
-* Selling unavailable stock
-* Invalid inventory references
-
----
+* Prevent negative inventory
+* Prevent invalid inventory references
 
 ## Buyer Validation
 
-The system prevents:
+* Prevent duplicate buyer phone numbers
 
-* Duplicate phone numbers
-* Invalid buyer references
+## Supplier Validation
+
+* Prevent duplicate supplier phone numbers
 
 ---
 
 # Roadmap
 
-## Phase 1: Authentication & Authorization
+## Phase 1 – Authentication & Authorization
 
 * [x] User Registration
 * [x] User Login
 * [x] JWT Authentication
-* [x] Protected Routes
-* [x] Role-Based Access Control
+* [x] OAuth2
+* [x] RBAC
 
 ---
 
-## Phase 2: Inventory Management
+## Phase 2 – Inventory Management
 
-* [x] Inventory Create API
-* [x] Inventory List API
-* [x] Inventory By ID API
-* [x] Inventory Update API
-* [x] Inventory Delete API
+* [x] Inventory CRUD
+* [x] Inventory Validation
+* [x] Inventory RBAC
 
 ---
 
-## Phase 3: Transaction Management
+## Phase 3 – Transaction Management
 
 * [x] Purchase Transactions
 * [x] Sale Transactions
 * [x] Inventory Synchronization
 * [x] Stock Validation
-* [x] Transaction RBAC
 
 ---
 
-## Phase 4: Buyer Management
+## Phase 4 – Buyer Management
 
-* [x] Buyer Registration
-* [x] Buyer Search
-* [x] Buyer History Foundation
-* [x] Buyer APIs
+* [x] Buyer CRUD Foundation
+* [x] Buyer Validation
 * [x] Buyer RBAC
 
 ---
 
-## Phase 5: Profit Engine
+## Phase 5 – Supplier Management
+
+* [x] Supplier CRUD Foundation
+* [x] Supplier Validation
+* [x] Supplier RBAC
+
+---
+
+## Phase 6 – Profit Engine
 
 * [ ] Revenue Tracking
 * [ ] Cost Tracking
 * [ ] Profit Calculation
-* [ ] Financial Insights
+* [ ] Financial Analytics
 
 ---
 
-## Phase 6: Reporting & Dashboard
+## Phase 7 – Reporting & Dashboard
 
 * [ ] Inventory Reports
-* [ ] Transaction Reports
 * [ ] Buyer Reports
+* [ ] Supplier Reports
 * [ ] Profit Reports
 * [ ] Business Dashboard
 
 ---
 
-## Phase 7: AI Features
+## Phase 8 – AI Features
 
-* [ ] AI Business Assistant
 * [ ] Scrap Price Prediction
 * [ ] Demand Forecasting
+* [ ] AI Business Assistant
 * [ ] Smart Recommendations
 
 ---
 
 # Project Structure
 
+```text
 backend/
 ├── app/
-│
-├── auth/
-├── database/
-├── dependencies/
-├── models/
-├── routes/
-├── schemas/
-├── services/
+│   ├── auth/
+│   ├── database/
+│   ├── dependencies/
+│   ├── models/
+│   ├── routes/
+│   ├── schemas/
+│   ├── services/
 │
 ├── docs/
 └── main.py
+```
 
 ---
 
@@ -371,33 +349,41 @@ backend/
 Successfully implemented:
 
 * Authentication System
-* Authorization System
 * JWT Authentication
 * OAuth2 Integration
 * Role-Based Access Control (RBAC)
-* Inventory CRUD Module
+* Inventory Management Module
 * Transaction Management Module
 * Buyer Management Module
+* Supplier Management Module
 * Inventory Synchronization Engine
 * Business Rule Validation
+* Service Layer Architecture
+* MySQL Integration
 * Swagger API Testing
-
-Current platform supports secure multi-role access for Owners, Workers, and Accountants with inventory management, transaction processing, and buyer management workflows.
 
 ---
 
 # Current Project Status
 
-Authentication System: ✅ Completed
+* ✅ Authentication System
+* ✅ Authorization System
+* ✅ JWT Authentication
+* ✅ OAuth2 Integration
+* ✅ RBAC System
+* ✅ Inventory Management Module
+* ✅ Transaction Management Module
+* ✅ Buyer Management Module
+* ✅ Supplier Management Module
 
-Authorization System: ✅ Completed
+## 🚀 Next Module
 
-RBAC System: ✅ Completed
+**Profit Engine**
 
-Inventory CRUD Module: ✅ Completed
+---
 
-Transaction Management Module: ✅ Completed
+## Author
 
-Buyer Management Module: ✅ Completed
+**Zaid Hakim Kakar**
 
-Next Module: 🚀 Profit Engine
+Backend Developer | Python | FastAPI | SQLAlchemy | MySQL
