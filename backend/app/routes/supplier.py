@@ -18,9 +18,9 @@ router = APIRouter(
     tags=["Supplier"]
 )
 
-@router.post("/suppliers",reponse_model = SupplierResponse)
+@router.post("/suppliers",response_model = SupplierResponse)
 def create_new_supplier(
-    supplier_data = SupplierCreate,
+    supplier_data:SupplierCreate,
     current_user = Depends(
         require_roles(
             "owner",
@@ -35,3 +35,29 @@ def create_new_supplier(
         supplier_data,
         current_user
     )
+@router.get("/suppliers",response_model = list[SupplierResponse])
+def get_suppliers(
+    db:Session = Depends(get_db),
+    current_user = Depends(
+        require_roles(
+            "owner",
+            "worker",
+            "accountant"
+        )
+    )
+):
+    return get_all_suppliers(db)
+
+@router.get("/suppliers/{supplier_id}",response_model=SupplierResponse)
+def supplier_by_id(
+    supplier_id:int,
+    db:Session = Depends(get_db),
+    current_user = Depends(
+        require_roles(
+            "owner",
+            "worker",
+            "accountant"
+        )
+    )
+):
+    return get_supplier_by_id(db,supplier_id)

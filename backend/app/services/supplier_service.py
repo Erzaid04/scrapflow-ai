@@ -46,7 +46,7 @@ def get_supplier_by_id(
     
     if not supplier_by_id:
         raise HTTPException(
-            status_code= 400,
+            status_code= 404,
             detail="Supplier not found"
         )
     return supplier_by_id

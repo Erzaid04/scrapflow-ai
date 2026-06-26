@@ -29,7 +29,4 @@ class Supplier(Base):
     )
     
     creator = relationship("User")
-    transactions = relationship(
-    "Transaction",
-    back_populates="supplier"
-)
+    
