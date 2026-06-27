@@ -1,26 +1,32 @@
 from pydantic import BaseModel
 from app.models.transaction import TransactionType
 from datetime import datetime
+from decimal import Decimal
 class TransactionCreate(BaseModel):
+    transaction_type:TransactionType
     inventory_id:int
     quantity:float
-    price_per_unit:float
+    sale_price_per_unit:Decimal
     party_name:str
-    transaction_type:TransactionType
+    
     
 class TransactionResponse(BaseModel):
+    transaction_type:TransactionType
     id:int
     inventory_id:int
     quantity:float
-    price_per_unit:float
-    purchase_price_per_unit:float | None = None
+    sale_price_per_unit:Decimal
+    purchase_price_per_unit:Decimal
+    revenue:Decimal
+    cost:Decimal
+    profit:Decimal
     party_name:str
-    transaction_type:TransactionType
+    
     created_by:int
     created_at:datetime
     
     class Config:
-        form_attributes = True
+        from_attributes = True
         
     
     

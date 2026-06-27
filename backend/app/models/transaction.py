@@ -8,6 +8,7 @@ from sqlalchemy import (
     String,
     ForeignKey,
     DateTime,
+    Numeric,
     Enum as SqlEnum
 )
 
@@ -46,11 +47,14 @@ class Transaction(Base):
         nullable=False
     )
 
-    price_per_unit = Column(
-        Float,
+    sale_price_per_unit = Column(
+        Numeric(10,2),
         nullable=False
     )
-    purchase_price_per_unit = Column(Float,nullable=True)
+    purchase_price_per_unit = Column(Numeric(10,2   ),nullable=False)
+    revenue = Column(Numeric(10,2),nullable=False)
+    cost = Column(Numeric(10,2),nullable=False)
+    profit = Column(Numeric(10,2),nullable=False)
     
 
     party_name = Column(
