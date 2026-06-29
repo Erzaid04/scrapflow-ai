@@ -5,7 +5,7 @@ from decimal import Decimal
 class TransactionCreate(BaseModel):
     transaction_type:TransactionType
     inventory_id:int
-    quantity:float
+    quantity:Decimal
     sale_price_per_unit:Decimal
     party_name:str
     
@@ -14,7 +14,7 @@ class TransactionResponse(BaseModel):
     transaction_type:TransactionType
     id:int
     inventory_id:int
-    quantity:float
+    quantity:Decimal
     sale_price_per_unit:Decimal
     purchase_price_per_unit:Decimal
     revenue:Decimal

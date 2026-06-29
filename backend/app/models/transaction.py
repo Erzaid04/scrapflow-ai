@@ -43,18 +43,18 @@ class Transaction(Base):
     )
 
     quantity = Column(
-        Float,
+        Numeric(18,2),
         nullable=False
     )
 
     sale_price_per_unit = Column(
-        Numeric(10,2),
+        Numeric(18,2),
         nullable=False
     )
-    purchase_price_per_unit = Column(Numeric(10,2   ),nullable=False)
-    revenue = Column(Numeric(10,2),nullable=False)
-    cost = Column(Numeric(10,2),nullable=False)
-    profit = Column(Numeric(10,2),nullable=False)
+    purchase_price_per_unit = Column(Numeric(18,2),nullable=False)
+    revenue = Column(Numeric(18,2),nullable=False)
+    cost = Column(Numeric(18,2),nullable=False)
+    profit = Column(Numeric(18,2),nullable=False)
     
 
     party_name = Column(

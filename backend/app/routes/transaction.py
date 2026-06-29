@@ -27,6 +27,6 @@ def create_new_transaction(
     return create_transaction(
         db,
         transaction_data,
-        current_user.id
+        current_user
     )
     
