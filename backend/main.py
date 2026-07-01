@@ -6,12 +6,13 @@ from app.routes.users import router as users_router
 from app.routes.inventory import router as inventory_router
 from app.routes.transaction import router as transaction_router
 from app.routes.buyer import router as buyer_router
+from app.routes.report import router as report_router
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(inventory_router)
 app.include_router(transaction_router)
 app.include_router(buyer_router)
-
+app.include_router(report_router)
 @app.get("/")
 def root():
     return {"message": "ScrapFlow AI API Running"}
