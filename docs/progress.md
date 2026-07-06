@@ -2,320 +2,226 @@
 
 ## Project Overview
 
-ScrapFlow AI is a SaaS platform for scrap collectors, traders, and recycling businesses, built using **FastAPI**, **MySQL**, **SQLAlchemy**, **JWT Authentication**, **OAuth2**, and **Role-Based Access Control (RBAC)**.
+ScrapFlow AI is a SaaS platform for scrap business management built using **FastAPI, MySQL, SQLAlchemy ORM, JWT Authentication, OAuth2, and Role-Based Access Control (RBAC)**.
+
+The platform enables scrap businesses to manage inventory, suppliers, buyers, purchase & sale transactions, profitability, and business reporting.
 
 ---
 
 # Project Architecture
 
-```text
+```
 Frontend
-    ↓
+      ↓
 Routes
-    ↓
+      ↓
 Schemas
-    ↓
+      ↓
 Services
-    ↓
+      ↓
 Dependencies
-    ↓
-Security / JWT
-    ↓
+      ↓
+Security (JWT / OAuth2 / RBAC)
+      ↓
 Models
-    ↓
-Database
+      ↓
+Database (MySQL)
 ```
 
 ---
 
 # Completed Features
 
-## Database Layer
+---
 
-### Completed
+# Database Layer
 
-* MySQL database configured
-* SQLAlchemy ORM configured
-* SessionLocal database session management
-* Database connection verified
-* Base model architecture created
-* Database table creation workflow implemented
+Status: ✅ Completed
+
+## Implemented
+
+- MySQL database configured
+- SQLAlchemy ORM configured
+- SessionLocal database management
+- Database connection verified
+- Declarative Base configured
+- Database initialization workflow
+- Automatic table creation
+- Foreign key relationships
+- Decimal-based financial fields
 
 ---
 
 # User Management
 
+Status: ✅ Completed
+
 ## User Model
 
-**Created**
+Created
 
-* `app/models/user.py`
+```
+app/models/user.py
+```
 
-### Implemented
+### Fields
 
-* User model
-* Users table
-* Role management
+- id
+- name
+- email
+- phone
+- password_hash
+- role
+- created_at
 
 ### Roles
 
-* Owner
-* Worker
-* Accountant
+- owner
+- worker
+- accountant
 
 ---
 
 # Security Layer
 
+Status: ✅ Completed
+
 ## Password Security
 
-### Implemented
+Implemented
 
-* bcrypt password hashing
-* Password verification
-* Secure password storage
+- bcrypt hashing
+- Password verification
+- Secure password storage
 
 ---
 
 ## JWT Authentication
 
-### Environment Variables
+Environment Variables
 
-* SECRET_KEY
-* ALGORITHM (HS256)
-* ACCESS_TOKEN_EXPIRE_MINUTES
+- SECRET_KEY
+- ALGORITHM
+- ACCESS_TOKEN_EXPIRE_MINUTES
 
-### Created
+Created
 
-* `app/auth/jwt_handler.py`
+```
+app/auth/jwt_handler.py
+```
 
-### Implemented
+Implemented
 
-* create_access_token()
-* verify_access_token()
+- create_access_token()
+- verify_access_token()
+
+JWT Payload
+
+```json
+{
+  "sub": "user_id",
+  "role": "user_role",
+  "exp": "expiration_time"
+}
+```
 
 ---
 
 # Authentication Module
 
+Status: ✅ Completed
+
 ## Registration
 
-**Endpoint**
+```
+POST /api/v1/auth/register
+```
 
-`POST /api/v1/auth/register`
+Features
 
-### Features
-
-* Email uniqueness validation
-* Phone uniqueness validation
-* Password hashing
-* User registration
+- Email uniqueness validation
+- Phone uniqueness validation
+- Password hashing
+- User creation
 
 ---
 
 ## Login
 
-**Endpoint**
+```
+POST /api/v1/auth/login
+```
 
-`POST /api/v1/auth/login`
+Features
 
-### Features
-
-* User authentication
-* Password verification
-* JWT token generation
+- Email lookup
+- Password verification
+- JWT generation
 
 ---
 
-## OAuth2 Integration
+## OAuth2
 
-**Endpoint**
+```
+POST /api/v1/auth/token
+```
 
-`POST /api/v1/auth/token`
+Implemented
 
-### Implemented
-
-* OAuth2PasswordBearer
-* OAuth2PasswordRequestForm
-* Swagger Authorization support
+- OAuth2PasswordBearer
+- OAuth2PasswordRequestForm
+- Swagger Authorize button
+- Automatic JWT injection
 
 ---
 
 # Protected Routes
 
-## Endpoint
+Status: ✅ Completed
 
-`GET /api/v1/users/me`
+Created
 
-### Features
+```
+app/dependencies/auth.py
+```
 
-* JWT verification
-* Current authenticated user
-* Protected route support
+Implemented
+
+- get_current_user()
+- JWT verification
+- User retrieval
+- Protected route dependency
+
+Endpoint
+
+```
+GET /api/v1/users/me
+```
 
 ---
 
-# Authorization System
+# Authorization (RBAC)
 
 Status: ✅ Completed
 
-## RBAC
+Created
 
-### Implemented
+```
+app/dependencies/roles.py
+```
 
-* Role validation
-* Permission checking
-* 403 Forbidden handling
+Implemented
 
-### Verified
+- require_roles()
+- Permission validation
+- 403 Forbidden handling
 
-* Owner permissions
-* Worker permissions
-* Accountant permissions
-* JWT integrated with RBAC
+Verified
 
----
-
-# Inventory Management Module
-
-Status: ✅ Completed
-
-## Model
-
-### Fields
-
-* id
-* material_name
-* quantity
-* unit
-* purchase_price_per_unit
-* supplier_name
-* created_by
-* created_at
-
-### Features
-
-* User relationship
-* Automatic timestamps
-
----
-
-## APIs
-
-* POST `/api/v1/inventory`
-* GET `/api/v1/inventory`
-* GET `/api/v1/inventory/{id}`
-* PUT `/api/v1/inventory/{id}`
-* DELETE `/api/v1/inventory/{id}`
-
-### Testing
-
-* CRUD verified
-* RBAC verified
-* MySQL persistence verified
-
----
-
-# Transaction Management Module
-
-Status: ✅ Completed
-
-## Model
-
-### Transaction Types
-
-* PURCHASE
-* SALE
-
-### Fields
-
-* id
-* transaction_type
-* inventory_id
-* quantity
-* price_per_unit
-* party_name
-* created_by
-* created_at
-
-### Relationships
-
-* Transaction → Inventory
-* Transaction → User
-
----
-
-## Business Rules
-
-### Purchase
-
-* Inventory automatically increases
-
-### Sale
-
-* Inventory automatically decreases
-
-### Validation
-
-* Prevent negative inventory
-* Prevent invalid sales
-
----
-
-## API
-
-* POST `/api/v1/transactions`
-
-### Testing
-
-* Purchase verified
-* Sale verified
-* Inventory synchronization verified
-* RBAC verified
-
----
-
-# Buyer Management Module
-
-Status: ✅ Completed
-
-## Model
-
-### Fields
-
-* id
-* name
-* phone
-* address
-* created_by
-* created_at
-
-### Features
-
-* Unique phone validation
-* User relationship
-* Audit tracking
-
----
-
-## APIs
-
-* POST `/api/v1/buyers`
-* GET `/api/v1/buyers`
-* GET `/api/v1/buyers/{buyer_id}`
-
-### Business Rules
-
-* Duplicate phone prevention
-* Buyer existence validation
-
-### Testing
-
-* Create verified
-* Get All verified
-* Get By ID verified
-* RBAC verified
-* Swagger verified
+- Owner access
+- Worker access
+- Accountant access
+- Multi-role permissions
 
 ---
 
@@ -323,229 +229,684 @@ Status: ✅ Completed
 
 Status: ✅ Completed
 
-## Model
+## Supplier Model
+
+Created
+
+```
+app/models/supplier.py
+```
 
 ### Fields
 
-* id
-* name
-* phone
-* address
-* created_by
-* created_at
+- id
+- name
+- phone
+- address
+- created_by
+- created_at
 
 ### Features
 
-* Unique phone validation
-* User relationship
-* Audit tracking
+- Unique phone validation
+- Foreign key to users
+- Audit tracking
+
+---
+
+## Schemas
+
+Created
+
+```
+app/schemas/supplier.py
+```
+
+Implemented
+
+- SupplierCreate
+- SupplierResponse
+
+---
+
+## Services
+
+Created
+
+```
+app/services/supplier_service.py
+```
+
+Implemented
+
+- create_supplier()
+- get_all_suppliers()
+- get_supplier_by_id()
 
 ---
 
 ## APIs
 
-* POST `/api/v1/suppliers`
-* GET `/api/v1/suppliers`
-* GET `/api/v1/suppliers/{supplier_id}`
-
-### Business Rules
-
-* Duplicate phone prevention
-* Supplier existence validation
-
-### Testing
-
-* Create verified
-* Get All verified
-* Get By ID verified
-* Duplicate phone validation verified
-* RBAC verified
-* Swagger verified
+```
+POST   /api/v1/suppliers
+GET    /api/v1/suppliers
+GET    /api/v1/suppliers/{id}
+```
 
 ---
 
-# Implemented APIs
+## Testing
+
+- CRUD verified
+- Duplicate phone validation
+- RBAC verified
+
+---
+
+# Buyer Management Module
+
+Status: ✅ Completed
+
+## Buyer Model
+
+Created
+
+```
+app/models/buyer.py
+```
+
+### Fields
+
+- id
+- name
+- phone
+- address
+- created_by
+- created_at
+
+---
+
+## Schemas
+
+Created
+
+```
+app/schemas/buyer.py
+```
+
+Implemented
+
+- BuyerCreate
+- BuyerResponse
+
+---
+
+## Services
+
+Created
+
+```
+app/services/buyer_service.py
+```
+
+Implemented
+
+- create_buyer()
+- get_all_buyers()
+- get_buyer_by_id()
+
+Business Rules
+
+- Duplicate phone prevention
+- Buyer existence validation
+
+---
+
+## APIs
+
+```
+POST /api/v1/buyers
+GET  /api/v1/buyers
+GET  /api/v1/buyers/{id}
+```
+
+---
+
+## Testing
+
+- CRUD verified
+- Validation verified
+- RBAC verified
+
+---
+
+# Inventory Management Module
+
+Status: ✅ Completed
+
+## Inventory Model
+
+Created
+
+```
+app/models/inventory.py
+```
+
+### Fields
+
+- id
+- material_name
+- quantity (Decimal)
+- unit
+- purchase_price_per_unit (Decimal)
+- supplier_name
+- created_by
+- created_at
+
+### Features
+
+- Decimal precision
+- Foreign key to users
+- Audit tracking
+
+---
+
+## Schemas
+
+Created
+
+```
+app/schemas/inventory.py
+```
+
+Implemented
+
+- InventoryCreate
+- InventoryUpdate
+- InventoryResponse
+
+---
+
+## Services
+
+Created
+
+```
+app/services/inventory_service.py
+```
+
+Implemented
+
+- add_inventory()
+- get_all_inventory()
+- get_inventory_by_id()
+- update_inventory()
+- delete_inventory()
+
+---
+
+## APIs
+
+```
+POST   /api/v1/inventory
+GET    /api/v1/inventory
+GET    /api/v1/inventory/{id}
+PUT    /api/v1/inventory/{id}
+DELETE /api/v1/inventory/{id}
+```
+
+---
+
+## Testing
+
+- Create
+- Read
+- Update
+- Delete
+- Decimal storage
+- MySQL persistence
+- RBAC
+
+---
+
+# Transaction & Profit Engine
+
+Status: ✅ Completed
+
+## Transaction Model
+
+Created
+
+```
+app/models/transaction.py
+```
+
+### Transaction Types
+
+- PURCHASE
+- SALE
+
+### Fields
+
+- id
+- transaction_type
+- inventory_id
+- quantity (Decimal)
+- sale_price_per_unit (Decimal)
+- purchase_price_per_unit (Decimal Snapshot)
+- revenue (Decimal)
+- cost (Decimal)
+- profit (Decimal)
+- party_name
+- created_by
+- created_at
+
+### Relationships
+
+- Transaction → Inventory
+- Transaction → User
+
+---
+
+## Schemas
+
+Created
+
+```
+app/schemas/transaction.py
+```
+
+Implemented
+
+- TransactionCreate
+- TransactionResponse
+
+---
+
+## Services
+
+Created
+
+```
+app/services/transaction_service.py
+```
+
+Implemented
+
+- validate_inventory_exists()
+- create_transaction()
+- create_purchase_transaction()
+- create_sale_transaction()
+
+---
+
+## Purchase Workflow
+
+Business Logic
+
+- Validate inventory
+- Calculate cost
+- Create purchase transaction
+- Increase inventory quantity
+- Store purchase snapshot
+
+---
+
+## Sale Workflow
+
+Business Logic
+
+- Validate inventory
+- Prevent overselling
+- Calculate revenue
+- Calculate cost
+- Calculate profit
+- Create sale transaction
+- Reduce inventory
+
+---
+
+## Financial Engine
+
+Implemented
+
+- Revenue calculation
+- Cost calculation
+- Profit calculation
+- Purchase price snapshot
+- Decimal precision
+
+---
+
+## Business Rules
+
+- Inventory cannot become negative
+- Inventory must exist
+- Revenue automatically calculated
+- Cost automatically calculated
+- Profit automatically calculated
+- Purchase increases inventory
+- Sale decreases inventory
+
+---
+
+## APIs
+
+```
+POST /api/v1/transaction/transactions
+```
+
+---
+
+## Testing
+
+Verified
+
+- Purchase transactions
+- Sale transactions
+- Revenue calculation
+- Cost calculation
+- Profit calculation
+- Inventory synchronization
+- Insufficient inventory validation
+- Decimal precision
+- Swagger testing
+
+---
+
+# Reporting Module
+
+Status: ✅ Completed
+
+## Profit Summary
+
+Created
+
+```
+app/schemas/report.py
+app/services/report_service.py
+app/routes/report.py
+```
+
+---
+
+## Schema
+
+Implemented
+
+```
+ProfitSummaryResponse
+```
+
+Fields
+
+- total_revenue
+- total_cost
+- total_profit
+
+---
+
+## Service
+
+Implemented
+
+```
+get_profit_summary()
+```
+
+Features
+
+- SQL aggregate functions
+- SUM(revenue)
+- SUM(cost)
+- SUM(profit)
+- Zero fallback using Decimal("0.00")
+
+---
+
+## Route
+
+```
+GET /api/v1/reports/profit-summary
+```
+
+---
+
+## Testing
+
+Verified
+
+- SQL aggregation
+- Empty database fallback
+- Swagger testing
+
+---
+
+# APIs Completed
 
 ## Authentication
 
-* POST `/api/v1/auth/register`
-* POST `/api/v1/auth/login`
-* POST `/api/v1/auth/token`
+```
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+POST /api/v1/auth/token
+```
 
-## User
+---
 
-* GET `/api/v1/users/me`
+## Users
+
+```
+GET /api/v1/users/me
+```
+
+---
 
 ## Inventory
 
-* POST `/api/v1/inventory`
-* GET `/api/v1/inventory`
-* GET `/api/v1/inventory/{id}`
-* PUT `/api/v1/inventory/{id}`
-* DELETE `/api/v1/inventory/{id}`
+```
+POST   /api/v1/inventory
+GET    /api/v1/inventory
+GET    /api/v1/inventory/{id}
+PUT    /api/v1/inventory/{id}
+DELETE /api/v1/inventory/{id}
+```
 
-## Transactions
-
-* POST `/api/v1/transactions`
+---
 
 ## Buyers
 
-* POST `/api/v1/buyers`
-* GET `/api/v1/buyers`
-* GET `/api/v1/buyers/{buyer_id}`
+```
+POST /api/v1/buyers
+GET  /api/v1/buyers
+GET  /api/v1/buyers/{id}
+```
+
+---
 
 ## Suppliers
 
-* POST `/api/v1/suppliers`
-* GET `/api/v1/suppliers`
-* GET `/api/v1/suppliers/{supplier_id}`
+```
+POST /api/v1/suppliers
+GET  /api/v1/suppliers
+GET  /api/v1/suppliers/{id}
+```
+
+---
+
+## Transactions
+
+```
+POST /api/v1/transaction/transactions
+```
+
+---
+
+## Reports
+
+```
+GET /api/v1/reports/profit-summary
+```
 
 ---
 
 # Technical Concepts Learned
 
-* FastAPI
-* SQLAlchemy ORM
-* MySQL
-* Pydantic
-* CRUD Operations
-* Database Sessions
-* Models
-* Schemas
-* Service Layer
-* Dependency Injection
-* JWT Authentication
-* OAuth2
-* Protected Routes
-* Current User Pattern
-* Role-Based Access Control (RBAC)
-* Password Hashing
-* Environment Variables
-* Foreign Keys
-* Relationships
-* Business Rule Validation
-* Inventory Synchronization
-* Transaction Processing
-* Buyer Management
-* Supplier Management
-* Layered Backend Architecture
-* Domain Logic Separation
+- FastAPI
+- SQLAlchemy ORM
+- MySQL
+- Database Sessions
+- Models
+- Schemas
+- Routes
+- Service Layer
+- Dependency Injection
+- JWT Authentication
+- OAuth2
+- Protected Routes
+- Current User Pattern
+- RBAC
+- Password Hashing
+- Environment Variables
+- Foreign Keys
+- Relationships
+- CRUD Operations
+- Layered Architecture
+- Business Rule Validation
+- Inventory Synchronization
+- Financial Calculations
+- Revenue Engine
+- Cost Engine
+- Profit Engine
+- SQL Aggregate Functions
+- Decimal Precision
+- Reporting APIs
 
 ---
 
-# Current Project Status
+# Current Status
 
-✅ Authentication System
-
-✅ Authorization System
-
-✅ JWT Authentication
-
-✅ OAuth2 Integration
-
-✅ RBAC System
-
-✅ Inventory Management Module
-
-✅ Transaction Management Module
-
-✅ Buyer Management Module
-
-✅ Supplier Management Module
+| Module | Status |
+|---------|--------|
+| Database | ✅ |
+| Authentication | ✅ |
+| Authorization | ✅ |
+| RBAC | ✅ |
+| Inventory | ✅ |
+| Buyers | ✅ |
+| Suppliers | ✅ |
+| Transactions | ✅ |
+| Profit Engine | ✅ |
+| Reporting | ✅ |
+| Dashboard | ⏳ |
+| Expenses | ⏳ |
+| Advanced Reports | ⏳ |
+| AI Features | ⏳ |
 
 ---
 
 # Next Milestone
 
-## Profit Engine Module
+## Expense Management Module
 
-### Planned Features
+Planned Features
 
-#### Profit Calculation
-
-* Revenue calculation
-* Cost calculation
-* Profit per transaction
-* Total profit tracking
-
-#### Business Analytics
-
-* Revenue reports
-* Profit reports
-* Monthly analytics
-* Supplier analytics
-* Buyer analytics
-
-#### Dashboard Metrics
-
-* Total Inventory Value
-* Total Revenue
-* Total Cost
-* Total Profit
+- Expense CRUD
+- Expense Categories
+- Operational Cost Tracking
+- Expense Validation
+- Expense Reports
+- Dashboard Integration
+- Net Profit Calculation
 
 ---
 
 # Future Modules
 
-## Reporting
-
-* Inventory Reports
-* Transaction Reports
-* Buyer Reports
-* Supplier Reports
-* Profit Reports
-
 ## Dashboard
 
-* Business Overview
-* Revenue Analytics
-* Profit Analytics
-* Inventory Analytics
+- Business Overview
+- Inventory Value
+- Revenue
+- Expenses
+- Gross Profit
+- Net Profit
+- Total Buyers
+- Total Suppliers
+- Total Transactions
+
+---
+
+## Advanced Reporting
+
+- Monthly Profit
+- Monthly Revenue
+- Monthly Expenses
+- Inventory Valuation
+- Top Buyers
+- Top Suppliers
+- PDF Export
+- Excel Export
+
+---
 
 ## AI Features
 
-* Scrap Price Prediction
-* Demand Forecasting
-* AI Business Assistant
-* Smart Recommendations
+- Voice Notes
+- Speech-to-Text
+- AI Business Assistant
+- Business Insights
+- OCR
+- WhatsApp Integration
 
 ---
 
 # Latest Achievement
 
-Successfully implemented:
+Successfully implemented
 
-* Authentication System
-* Authorization System
-* JWT Authentication
-* OAuth2 Integration
-* Role-Based Access Control (RBAC)
-* Inventory Management Module
-* Transaction Management Module
-* Buyer Management Module
-* Supplier Management Module
-* Inventory Synchronization Engine
-* Business Rule Validation
-* Service Layer Architecture
-* MySQL Integration
-* Swagger API Testing
+- Authentication System
+- Authorization System
+- OAuth2 Integration
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- Inventory Management
+- Buyer Management
+- Supplier Management
+- Purchase & Sale Transaction Engine
+- Revenue Calculation Engine
+- Cost Calculation Engine
+- Profit Calculation Engine
+- Inventory Synchronization
+- Profit Summary Reporting API
+- SQL Aggregate Reporting
+- Decimal-based Financial Precision
+- Business Rule Validation
+- Service Layer Architecture
+- MySQL Integration
+- Swagger API Testing
 
 ---
 
-# Current Project Status
+# Overall Project Progress
 
-✅ Authentication System
+```
+Core Backend                ██████████ 100%
 
-✅ Authorization System
+Authentication              ██████████ 100%
+Authorization               ██████████ 100%
+RBAC                        ██████████ 100%
 
-✅ RBAC System
+Inventory                   ██████████ 100%
+Buyers                      ██████████ 100%
+Suppliers                   ██████████ 100%
 
-✅ Inventory Management Module
+Transactions                ██████████ 100%
+Profit Engine               ██████████ 100%
+Reporting (Phase 1)         ██████████ 100%
 
-✅ Transaction Management Module
-
-✅ Buyer Management Module
-
-✅ Supplier Management Module
-
-🚀 Next Module: **Profit Engine**
+Expense Management          ░░░░░░░░░░   0%
+Dashboard                   ░░░░░░░░░░   0%
+Advanced Reports            ░░░░░░░░░░   0%
+AI Features                 ░░░░░░░░░░   0%
+```
