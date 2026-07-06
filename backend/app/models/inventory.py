@@ -1,4 +1,4 @@
-from sqlalchemy import Column,Integer,String,Float,DateTime
+from sqlalchemy import Column,Integer,String,Float,DateTime,Numeric
 from sqlalchemy.sql import func
 from sqlalchemy import ForeignKey
 from app.models.base import Base
@@ -9,9 +9,9 @@ class Inventory(Base):
     
     id = Column(Integer,primary_key=True)
     material_name = Column(String(100),nullable = False)
-    quantity = Column(Float,nullable = False)
+    quantity = Column(Numeric(18,2),nullable = False)
     unit = Column(String(20),nullable = False)
-    purchase_price_per_unit = Column(Float,nullable = False)
+    purchase_price_per_unit = Column(Numeric(18,2),nullable = False)
     supplier_name = Column(String(100),nullable=False)
     created_by = Column(Integer,ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime,server_default=func.now())
