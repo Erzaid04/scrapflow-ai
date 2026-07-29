@@ -6,6 +6,7 @@ from app.models.inventory import Inventory
 from app.models.transaction import Transaction
 from  app.models.buyer import Buyer
 from app.models.supplier import Supplier
+from app.models.expense import Expense
 print("creating tables...")
 Base.metadata.create_all(bind= engine)
 print("Tables created successfully")

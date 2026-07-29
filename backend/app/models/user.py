@@ -6,6 +6,7 @@ from sqlalchemy import(
     DateTime,
     Enum
 )
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.models.base import Base
 
@@ -20,3 +21,7 @@ class User(Base):
     role = Column(Enum("owner","worker","accountant"),default = "owner",nullable = "False")
     is_active = Column(Boolean,default = True)
     created_at = Column(DateTime,default = datetime.utcnow)
+    expenses = relationship(
+    "Expense",
+    back_populates="user"
+)
