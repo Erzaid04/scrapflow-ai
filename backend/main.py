@@ -8,6 +8,8 @@ from app.routes.transaction import router as transaction_router
 from app.routes.buyer import router as buyer_router
 from app.routes.expense import router as expense_router
 from app.routes.supplier import router as supplier_router
+from app.routes.dashboard import router as dashboard_router
+app.include_router(dashboard_router)
 app.include_router(supplier_router)
 app.include_router(expense_router)
 app.include_router(auth_router)
