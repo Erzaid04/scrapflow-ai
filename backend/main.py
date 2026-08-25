@@ -10,6 +10,9 @@ from app.routes.expense import router as expense_router
 from app.routes.supplier import router as supplier_router
 from app.routes.dashboard import router as dashboard_router
 from app.routes.monthly_summary import router as monthly_summary_router
+from app.routes.inventory_report import router as inventory_report_router
+
+app.include_router(inventory_report_router)
 app.include_router(monthly_summary_router)
 app.include_router(dashboard_router)
 app.include_router(supplier_router)
