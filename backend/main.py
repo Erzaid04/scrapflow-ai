@@ -13,7 +13,9 @@ from app.routes.monthly_summary import router as monthly_summary_router
 from app.routes.inventory_report import router as inventory_report_router
 from app.routes.sales_report import router as sales_report_router
 from app.routes.purchase_report import router as purchase_report_router
+from app.routes.expense_report import router as expense_report_router
 
+app.include_router(expense_report_router)
 app.include_router(purchase_report_router)
 app.include_router(sales_report_router)
 app.include_router(inventory_report_router)
