@@ -14,7 +14,13 @@ from app.routes.inventory_report import router as inventory_report_router
 from app.routes.sales_report import router as sales_report_router
 from app.routes.purchase_report import router as purchase_report_router
 from app.routes.expense_report import router as expense_report_router
+from app.routes.material_performance import router as material_performance_router
+from app.routes.buyer_performance import router as buyer_performance_router
+from app.routes.supplier_performance import router as supplier_performance_router
 
+app.include_router(supplier_performance_router)
+app.include_router(buyer_performance_router)
+app.include_router(material_performance_router)
 app.include_router(expense_report_router)
 app.include_router(purchase_report_router)
 app.include_router(sales_report_router)
