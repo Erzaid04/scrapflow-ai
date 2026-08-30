@@ -17,7 +17,11 @@ from app.routes.expense_report import router as expense_report_router
 from app.routes.material_performance import router as material_performance_router
 from app.routes.buyer_performance import router as buyer_performance_router
 from app.routes.supplier_performance import router as supplier_performance_router
+from app.routes.expense_analysis import router as expense_analysis_router
+from app.routes.monthly_growth import router as monthly_growth_router
 
+app.include_router(monthly_growth_router)
+app.include_router(expense_analysis_router)
 app.include_router(supplier_performance_router)
 app.include_router(buyer_performance_router)
 app.include_router(material_performance_router)
